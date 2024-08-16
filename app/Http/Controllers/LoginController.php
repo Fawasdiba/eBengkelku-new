@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Mail\RegisterEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class LoginController extends Controller
 {
@@ -19,12 +20,6 @@ class LoginController extends Controller
     public function registerPage()
     {
         return view('auth.register');
-    }
-
-    public function logout()
-    {
-        Session::forget('id_pelanggan');
-        return redirect()->route('beranda');
     }
 
     public function signin(Request $request)
@@ -193,5 +188,15 @@ class LoginController extends Controller
             ->update(['password_pelanggan' => $password]);
 
         return back()->with('alert', 'success_Success to change your password.');
+    }
+
+    public function logout(Request $request)
+    {
+        // Hapus sesi dan regenerasi token CSRF
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        // Arahkan ke beranda
+        return redirect()->route('beranda');
     }
 }

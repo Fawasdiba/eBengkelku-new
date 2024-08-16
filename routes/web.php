@@ -48,7 +48,7 @@ Route::prefix('event')->group(function () {
 
 // Rute untuk Produk
 Route::prefix('product')->group(function () {
-    Route::get('/', [ProdukController::class, 'index'])->name('product');
+    Route::get('/', [ProdukController::class, 'index'])->name('services');
     Route::get('detail/{id}/{ps}', [ProdukController::class, 'detail'])->name('product.detail');
     Route::post('add-to-cart/{id}/{ps}', [ProdukController::class, 'add_to_cart'])->name('product.add_to_cart');
 });
@@ -70,12 +70,12 @@ Route::prefix('login')->group(function () {
     Route::post('reset_password', [LoginController::class, 'reset_password'])->name('login.reset_password');
     Route::get('register', [LoginController::class, 'registerPage'])->name('auth.register');
     Route::post('/register', [LoginController::class, 'register'])->name('register.submit');
-    Route::get('logout', [LoginController::class, 'logout'])->name('login.logout');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout.submit');
 });
 
 // Rute untuk Profil
 Route::prefix('profile')->group(function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('profile');
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('update_profile', [ProfileController::class, 'update_profile'])->name('profile.update_profile');
     Route::post('upload', [ProfileController::class, 'upload'])->name('profile.upload');
     Route::post('log', [ProfileController::class, 'log'])->name('profile.log');
